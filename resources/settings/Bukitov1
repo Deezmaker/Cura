@@ -1,0 +1,41 @@
+{
+    "id": "bukito_v1",
+    "icon": "bukitov1.png",
+    "name": "Bukito v1",
+    "platform": "bukitov1_platform.stl",
+
+    "inherits": "fdmprinter.json",
+
+    "machine_settings": {
+        "machine_width": { "default": 140 },
+        "machine_height": { "default": 150 },
+        "machine_depth": { "default": 125 },
+        "machine_center_is_zero": { "default": false },
+        "machine_nozzle_size": { "default": 0.5 },
+        "machine_head_shape_min_x": { "default": 50 },
+        "machine_head_shape_min_y": { "default": 50 },
+        "machine_head_shape_max_x": { "default": 50 },
+        "machine_head_shape_max_y": { "default": 50 },
+        "machine_nozzle_gantry_distance": { "default": 25 },
+        "machine_nozzle_offset_x_1": { "default": 0.0 },
+        "machine_nozzle_offset_y_1": { "default": 0.0 },
+        "machine_gcode_flavor": { "default": "RepRap (Marlin/Sprinter)" },
+
+        "machine_start_gcode": {
+            "default": "M207 S{retraction_amount} F10200 ; configure firmware retraction\nM208 S.02 F500 ; configure firmware retraction recover\nM209 S0 ; autoretract off\nM104 S160  ;heat nozzle to standby temperature while waiting for initialization\nG21 ;metric values\nG90 ;absolute positioning\nM82 ;set extruder to absolute mode\nM107 ;start with the fan off\nG28 X0 Y0; home X and Y axes\nG1 X140 Y0 F9000; move to dump position\nG28 Z0; home Z\nM109 S{print_temperature}\nG11\nG92 E-30 ;reset filament position for priming\nG1 F200 E0 ;prime extruder\nG1 F{travel_speed}"
+        },
+        "machine_end_gcode": {
+            "default": "G10\nM104 S0 ; turn off temperature\nM140 S0 ; heated bed heater off\nM140 S0 ; turn off bed\nM400\nM200 D0 ; switch back to extrude by filament length (mm)\nG28 X0  ; home X axis\nG1 Y150 ; move platform forward\nG92 E20 ; set filament length for retraction\nG1 E0 F10200 ; retract filament for easy removal\nM84; disable motors"
+        }
+    },
+
+    "categories": {
+        "material": {
+            "settings": {
+                "material_bed_temperature": {
+                    "visible": false
+                }
+            }
+        }
+    }
+}
